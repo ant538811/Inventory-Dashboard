@@ -13,17 +13,28 @@ var model = {
 
 	// runs powershell command but there is a delay between the rendering and the data access because of active directory
 	postdata : function(criteria, days){
-		// var command = "Get-ADComputer -Filter { OperatingSystem -NotLike '*Server*' }";
-		// command += "-Properties Name, OperatingSystem, createTimeStamp,SamAccountName ";
-		// command += "| Select Name, OperatingSystem, SamAccountName, createTimeStamp ";
-		// command += "| Where {$_.createTimeStamp -lt (Get-Date).AddDays(-"+days+")};";
 		// var spawn = require("child_process").spawn,child;
 		// child = spawn("powershell.exe",[command]);
 		// child.stdout.on("data",function(data){
 		// console.log(data.toString());
 		// return data.toString();
 		// });
-		return criteria.toString() + " " + days.toString();
+
+		// generates the powershell query
+		var command = "";
+		if (criteria == "Users"){
+			command += "Get-ADUser -properties * -filter {(lastlogondate -notlike '*' -OR lastlogondate -le ";
+			command += days + ") -AND (passwordlastset -le " + days + " ) -AND (enabled -eq $True) -and (PasswordNeverExpires -eq $false) -and (whencreated -le " + days + ")} | select-object name, SAMaccountname, passwordExpired, PasswordNeverExpires, logoncount, whenCreated, lastlogondate, PasswordLastSet";
+		}
+		else if (criteria == "Workstations"){
+			command += "Get-ADComputer -Filter { OperatingSystem -NotLike '*Server*' } -Properties Name, OperatingSystem, createTimeStamp,SamAccountName | Select Name, OperatingSystem, SamAccountName, createTimeStamp | Where {$_.createTimeStamp -lt (Get-Date).AddDays(";
+			command += days + ")}";
+		}
+		else if (criteria == "Servers"){
+			command += "Get-ADComputer -Filter { OperatingSystem -Like '*Server*' } -Properties Name, OperatingSystem, createTimeStamp,SamAccountName | Select Name, OperatingSystem, SamAccountName, createTimeStamp | Where {$_.createTimeStamp -lt (Get-Date).AddDays(";
+			command += days + ")}";
+		}
+		return command;
 	}
 }
 
