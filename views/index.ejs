@@ -1,0 +1,28 @@
+
+
+
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
+	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+</head>
+<body>
+	<div class = "container">
+	<h1>My App</h1>
+	<%= new Date() %>
+		<u1>
+			<li><%= results%></li>
+		</u1>
+		<form action="/add" method="post">
+			<select name='criteria'><option></option><option value='Users'>Users</option><option value='Workstations'>Workstations</option><option value='Servers'>Servers</option></select>
+			<select name='days'><option></option><option value=45>45 days</option><option value=60>60 days</option><option value=120>120 days</option></select>
+			<input type="submit">
+	</div>
+	<div id = "Summary">Summary</div>
+
+	<div id = "Results"></div>
+</body>
+</html>
