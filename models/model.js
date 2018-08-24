@@ -13,12 +13,6 @@ var model = {
 
 	// runs powershell command but there is a delay between the rendering and the data access because of active directory
 	postdata : function(criteria, days){
-		// var spawn = require("child_process").spawn,child;
-		// child = spawn("powershell.exe",[command]);
-		// child.stdout.on("data",function(data){
-		// console.log(data.toString());
-		// return data.toString();
-		// });
 
 		// generates the powershell query
 		var command = "";
@@ -34,7 +28,26 @@ var model = {
 			command += "Get-ADComputer -Filter { OperatingSystem -Like '*Server*' } -Properties Name, OperatingSystem, createTimeStamp,SamAccountName | Select Name, OperatingSystem, SamAccountName, createTimeStamp | Where {$_.createTimeStamp -lt (Get-Date).AddDays(";
 			command += days + ")}";
 		}
-		return command;
+		// return command;
+
+		// runs command through subprocess
+		var spawn = require("child_process").spawn,child;
+		child = spawn("powershell.exe",[command]);
+		child.stdout.on("data",function(data){
+		console.log(data.toString());
+		return data.toString();
+		});
+
+		// runs command through subprocess
+		// ps.addCommand('echo node-powershell');
+		// ps.invoke()
+		// .then(output => {
+  // 		return output;
+		// })
+		// .catch(err => {
+  // 		console.log(err);
+  // 		ps.dispose();
+		// });
 	}
 }
 
