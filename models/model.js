@@ -38,7 +38,7 @@ var model = {
 		return data.toString();
 		});
 
-		// runs command through subprocess
+		// runs command through node package
 		// ps.addCommand('echo node-powershell');
 		// ps.invoke()
 		// .then(output => {
