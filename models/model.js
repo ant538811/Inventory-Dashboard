@@ -13,8 +13,8 @@ var model = {
 
 	// runs powershell command but there is a delay between the rendering and the data access because of active directory
 	postdata : function(criteria, days){
-
 		// generates the powershell query
+
 		var command = "";
 		if (criteria == "Users"){
 			command += "Get-ADUser -properties * -filter {(lastlogondate -notlike '*' -OR lastlogondate -le ";
@@ -34,7 +34,7 @@ var model = {
 		var spawn = require("child_process").spawn,child;
 		child = spawn("powershell.exe",[command]);
 		child.stdout.on("data",function(data){
-		console.log(data.toString());
+		console.log(data.toString()); //comes out as undefined until the active directory is accessed
 		return data.toString();
 		});
 
@@ -48,7 +48,7 @@ var model = {
   // 		console.log(err);
   // 		ps.dispose();
 		// });
-		
+
 	}
 }
 
