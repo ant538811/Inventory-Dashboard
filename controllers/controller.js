@@ -26,14 +26,5 @@ router.post('/add', function (req, res){
 	res.redirect('/');
 });
 
-// post request to test the acceptance of input
-// router.post('/test', function (req, res){
-// 	var criteria = req.body.criteria;
-// 	var days = req.body.days;
-// 	results.push(model.testfunc(criteria, days));
-// 	results.push(model.postdata());
-// 	res.redirect('/');
-// });
-
 // export the router object as the module
 module.exports = router;

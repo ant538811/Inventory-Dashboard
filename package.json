@@ -1,0 +1,25 @@
+{
+  "name": "Inventory-Dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ant538811/Inventory-Dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ant538811/Inventory-Dashboard/issues"
+  },
+  "homepage": "https://github.com/ant538811/Inventory-Dashboard#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "node-powershell": "^3.3.1"
+  }
+}
