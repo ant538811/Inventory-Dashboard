@@ -18,7 +18,7 @@ var model = {
 		var command = "";
 		if (criteria == "Users"){
 			command += "Get-ADUser -properties * -filter {(lastlogondate -notlike '*' -OR lastlogondate -le ";
-			command += days + ") -AND (passwordlastset -le " + days + " ) -AND (enabled -eq $True) -and (PasswordNeverExpires -eq $false) -and (whencreated -le " + days + ")} | select-object name, SAMaccountname, passwordExpired, PasswordNeverExpires, logoncount, whenCreated, lastlogondate, PasswordLastSet";
+			command += days + ") -AND (passwordlastset -le (Get-Date).AddDays(" + days + ") ) -AND (enabled -eq $True) -and (PasswordNeverExpires -eq $false) -and (whencreated -le (Get-Date).AddDays(" + days + "))} | select-object name, SAMaccountname, passwordExpired, PasswordNeverExpires, logoncount, whenCreated, lastlogondate, PasswordLastSet";
 		}
 		else if (criteria == "Workstations"){
 			command += "Get-ADComputer -Filter { OperatingSystem -NotLike '*Server*' } -Properties Name, OperatingSystem, createTimeStamp,SamAccountName | Select Name, OperatingSystem, SamAccountName, createTimeStamp | Where {$_.createTimeStamp -lt (Get-Date).AddDays(";
